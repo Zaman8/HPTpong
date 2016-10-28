@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Timers;
 
 public class PaddleController : MonoBehaviour {
     public bool isAi;
-    public Rigidbody2D otherRb;
-    public GameObject other;
+    Rigidbody2D ballRd;
+    public GameObject ball;
     [SerializeField]
     float speed;
+    Vector3 firstPosition;
+    Vector3 secondPosition;
     // Use this for initialization
     void Start() {
-        otherRb = other.GetComponent<Rigidbody2D>();
+        ballRd = ball.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -28,12 +31,16 @@ public class PaddleController : MonoBehaviour {
     }
 
     float ComputerMove() {
-        Vector3 firstPosition = other.transform.position;
-        Vector3 secondPosition = other.transform.position;
-        if (firstPosition.x > secondPosition.x) {
-            float m = (firstPosition.x - secondPosition.x) / (-1 * (firstPosition.y - secondPosition.y));
+        firstPosition = ball.transform.position;
+        Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
+        if (firstPosition.x < secondPosition.x) {
+            float m = ((firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x));
+            Debug.Log("m:" + m);
             double y = m * (-10.5 - secondPosition.x) + secondPosition.y;
-            if (y < transform.position.y)
+            if (y > transform.position.y-0.5 && y < transform.position.y +0.5 ) {
+                return 0;
+            }
+            else if (y < transform.position.y)
                 return -1;
             else if (y > transform.position.y)
                 return 1;
