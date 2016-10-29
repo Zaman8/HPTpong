@@ -31,13 +31,13 @@ public class PaddleController : MonoBehaviour {
     }
 
     float ComputerMove() {
-        firstPosition = ball.transform.position;
-        Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
+        StartCoroutine("getPosition");
+        //Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
         if (firstPosition.x < secondPosition.x) {
             float m = ((firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x));
             Debug.Log("m:" + m);
             double y = m * (-10.5 - secondPosition.x) + secondPosition.y;
-            if (y > transform.position.y-0.5 && y < transform.position.y +0.5 ) {
+            if (y > transform.position.y-0.3 && y < transform.position.y +0.3) {
                 return 0;
             }
             else if (y < transform.position.y)
@@ -46,5 +46,10 @@ public class PaddleController : MonoBehaviour {
                 return 1;
         }
         return 0;
+    }
+    IEnumerator getPosition() {
+        firstPosition = ball.transform.position;
+        yield return new WaitForSeconds(0.1f);
+        secondPosition = ball.transform.position;
     }
 }

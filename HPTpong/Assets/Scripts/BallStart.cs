@@ -17,8 +17,9 @@ public class BallStart : MonoBehaviour {
         StartCoroutine("restartC");
     }
     IEnumerator start() {
+        int xvalue = (Random.Range(1, 2) == 1) ? Random.Range(-500, -250) : Random.Range(250, 500);
         yield return new WaitForSeconds(3);
-        ballRd.AddForce(new Vector2(Random.Range(-200, 200), Random.Range(-100, 100)));
+        ballRd.AddForce(new Vector2( xvalue, Random.Range(-50, 50)));
     }
     IEnumerator restartC() {
         yield return new WaitForSeconds(3);
