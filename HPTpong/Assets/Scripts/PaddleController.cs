@@ -4,8 +4,11 @@ using System.Timers;
 
 public class PaddleController : MonoBehaviour {
     public bool isAi;
+    public bool isHard;
+    public bool determineAttack = true;
     Rigidbody2D ballRd;
     public GameObject ball;
+    public GameObject player1;
     [SerializeField]
     float speed;
     Vector3 firstPosition;
@@ -34,22 +37,47 @@ public class PaddleController : MonoBehaviour {
         StartCoroutine("getPosition");
         //Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
         if (firstPosition.x < secondPosition.x) {
-            float m = ((firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x));
-            Debug.Log("m:" + m);
-            double y = m * (-10.5 - secondPosition.x) + secondPosition.y;
-            if (y > transform.position.y-0.3 && y < transform.position.y +0.3) {
-                return 0;
+            double y = calBallMovement();
+            if (!isHard) {
+                return makeMove(y);
             }
-            else if (y < transform.position.y)
-                return -1;
-            else if (y > transform.position.y)
-                return 1;
+            else {
+                if (determineAttack) {
+                    if (player1.transform.position.y > this.transform.position.y - 0.3 || player1.transform.position.y < this.transform.position.y + 0.3) {
+                        if (Random.Range(1, 2) == 1)
+                            y += 0.4;
+                        else
+                            y -= 0.4;
+                    } else if (player1.transform.position.y > this.transform.position.y) {
+                        y += 0.4;
+                    } else if (player1.transform.position.y < this.transform.position.y) {
+                        y -= 0.4;
+                    }
+                    determineAttack = false;
+                }
+                return makeMove(y);
+            }
         }
         return 0;
     }
+    double calBallMovement() {
+        float m = ((firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x));
+        double y = m * (-10.5 - secondPosition.x) + secondPosition.y;
+        return y;
+    }
+    int makeMove(double y) {
+        if (y > transform.position.y - 0.3 && y < transform.position.y + 0.3) 
+            return 0;
+         else if (y < transform.position.y)
+            return -1;
+        else if (y > transform.position.y)
+            return 1;
+        else
+            return 0;
+    }
     IEnumerator getPosition() {
         firstPosition = ball.transform.position;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         secondPosition = ball.transform.position;
     }
 }

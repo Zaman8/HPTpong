@@ -4,6 +4,7 @@ using System.Collections;
 public class Scores : MonoBehaviour {
     public int player1Score;
     public int player2Score;
+    public int max;
     public GameObject UI;
     ScoreDisplay display;
     // Use this for initialization
@@ -19,5 +20,8 @@ public class Scores : MonoBehaviour {
         if (player == 2)
             player2Score += 1;
         display.refresh(player1Score, player2Score);
+        if (player1Score  >= max || player2Score >= max) {
+            Time.timeScale = 0;
+        }
     }
 }
