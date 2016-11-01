@@ -4,11 +4,13 @@ using System.Collections;
 public class BallStart : MonoBehaviour {
     public GameObject ball;
     Rigidbody2D ballRd;
+    RenewBounce renewBounce;
     int a, b;
     // Use this for initialization
     void Start() {
         ballRd = ball.GetComponent<Rigidbody2D>();
         StartCoroutine("start");
+        renewBounce = this.GetComponent<RenewBounce>();
     }
     public void restart(int a, int b) {
         ball.gameObject.transform.position = new Vector3(0, 0, 0);
@@ -24,5 +26,7 @@ public class BallStart : MonoBehaviour {
     IEnumerator restartC() {
         yield return new WaitForSeconds(3);
         ballRd.AddForce(new Vector2(Random.Range(a, b), Random.Range(-100, 100)));
+        renewBounce.restartTime = Time.timeSinceLevelLoad;
+
     }
 }

@@ -9,21 +9,28 @@ public class LoadScene : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        Application.runInBackground = false;
     }
 
     // Update is called once per frame
     void Update() {
 
     }
-
-    void loadSingle() {
-        Application.runInBackground = false;
+    public void setAI(bool value) {
+        isAI = value;
+    }
+    public void setHard(bool value) {
+        isHard = value;
+    }
+    public void setMax(int value) {
+        max = value;
+    }
+    public void loadSingle() {
         Object.DontDestroyOnLoad(this.gameObject);
         SceneManager.LoadScene("Single Player");
     }
 
-    public void OnLevelWasLoaded(int level) {
+    void OnLevelWasLoaded(int level) {
         if (level == 1) {
 
         }

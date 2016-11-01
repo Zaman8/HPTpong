@@ -11,8 +11,7 @@ public class PaddleController : MonoBehaviour {
     public GameObject player1;
     [SerializeField]
     float speed;
-    Vector3 firstPosition;
-    Vector3 secondPosition;
+    public Vector3 secondPosition;
     // Use this for initialization
     void Start() {
         ballRd = ball.GetComponent<Rigidbody2D>();
@@ -34,9 +33,8 @@ public class PaddleController : MonoBehaviour {
     }
 
     float ComputerMove() {
-        StartCoroutine("getPosition");
         //Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
-        if (firstPosition.x < secondPosition.x) {
+        if (ball.transform.position.x < secondPosition.x) {
             double y = calBallMovement();
             if (!isHard) {
                 return makeMove(y);
@@ -49,9 +47,9 @@ public class PaddleController : MonoBehaviour {
                         else
                             y -= 0.4;
                     } else if (player1.transform.position.y > this.transform.position.y) {
-                        y += 0.4;
+                        y += 0.15;
                     } else if (player1.transform.position.y < this.transform.position.y) {
-                        y -= 0.4;
+                        y -= 0.15;
                     }
                     determineAttack = false;
                 }
@@ -61,12 +59,12 @@ public class PaddleController : MonoBehaviour {
         return 0;
     }
     double calBallMovement() {
-        float m = ((firstPosition.y - secondPosition.y) / (firstPosition.x - secondPosition.x));
+        float m = ((ball.transform.position.y - secondPosition.y) / (ball.transform.position.x - secondPosition.x));
         double y = m * (-10.5 - secondPosition.x) + secondPosition.y;
         return y;
     }
     int makeMove(double y) {
-        if (y > transform.position.y - 0.3 && y < transform.position.y + 0.3) 
+        if (y > transform.position.y - 0.25 && y < transform.position.y + 0.25) 
             return 0;
          else if (y < transform.position.y)
             return -1;
@@ -74,10 +72,5 @@ public class PaddleController : MonoBehaviour {
             return 1;
         else
             return 0;
-    }
-    IEnumerator getPosition() {
-        firstPosition = ball.transform.position;
-        yield return new WaitForSeconds(0.05f);
-        secondPosition = ball.transform.position;
     }
 }
