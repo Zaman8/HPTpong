@@ -31,7 +31,7 @@ public class RenewBounce : MonoBehaviour {
         else if (collision.gameObject.CompareTag("Horizontal wall")) {
             int addY = (this.gameObject.transform.position.y > 0) ? -100 : 100;
             float addX = (rb.velocity.x > 0) ? speedIncrease : -1 * speedIncrease;
-            Vector2 add = new Vector2(pastV.x + addX, -3 * pastV.y + addY);
+            Vector2 add = new Vector2(0, -3 * pastV.y + addY);
             rb.AddForce(add);
         }
     }
