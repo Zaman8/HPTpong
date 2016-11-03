@@ -10,23 +10,22 @@ public class BallStart : MonoBehaviour {
     void Start() {
         ballRd = ball.GetComponent<Rigidbody2D>();
         StartCoroutine("start");
-        renewBounce = this.GetComponent<RenewBounce>();
+        renewBounce = ball.gameObject.GetComponent<RenewBounce>();
     }
-    public void restart(int a, int b) {
+    public void restart(int a) {
         ball.gameObject.transform.position = new Vector3(0, 0, 0);
         this.a = a;
-        this.b = b;
         StartCoroutine("restartC");
     }
     IEnumerator start() {
-        int xvalue = (Random.Range(1, 2) == 1) ? Random.Range(-500, -250) : Random.Range(250, 500);
+        int xvalue = (Random.Range(1, 2) == 1) ? -500 : 500;
         yield return new WaitForSeconds(3);
-        ballRd.AddForce(new Vector2( xvalue, Random.Range(-50, 50)));
+        ballRd.AddForce(new Vector2( xvalue,0));
     }
     IEnumerator restartC() {
         yield return new WaitForSeconds(3);
-        ballRd.AddForce(new Vector2(Random.Range(a, b), Random.Range(-100, 100)));
+        ballRd.AddForce(new Vector2(a, 0));
         renewBounce.restartTime = Time.timeSinceLevelLoad;
-
+        yield break;
     }
 }

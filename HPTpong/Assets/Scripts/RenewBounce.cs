@@ -19,19 +19,22 @@ public class RenewBounce : MonoBehaviour {
         speedIncrease = 0;
     }
 
+    void FixedUpdate() {
+        speedIncrease = (speedIncrease > 5000) ? 5000 : ((Time.timeSinceLevelLoad - restartTime) / timeAdjust) + 500;
+    }
+
     void OnCollisionEnter2D(Collision2D collision) {
         p2PC.determineAttack = true;
         p2PC.secondPosition = this.gameObject.transform.position;
-        speedIncrease = (speedIncrease > 1500) ? 1500 : ((Time.timeSinceLevelLoad - restartTime) / timeAdjust) + 500;
-        if(collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2")) {
+        if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2")) {
             float yvalue = 350 * (this.gameObject.transform.position.y - collision.gameObject.transform.position.y);
             Vector2 add = (collision.gameObject.CompareTag("Player1")) ? new Vector2(-1 * speedIncrease, yvalue) : new Vector2(speedIncrease, yvalue);
             rb.AddForce(add);
-        }
-        else if (collision.gameObject.CompareTag("Horizontal wall")) {
+        } else if (collision.gameObject.CompareTag("Horizontal wall")) {
             int addY = (this.gameObject.transform.position.y > 0) ? -100 : 100;
             float addX = (rb.velocity.x > 0) ? speedIncrease : -1 * speedIncrease;
-            Vector2 add = new Vector2(0, -3 * pastV.y + addY);
+            addX = addX / 10;
+            Vector2 add = new Vector2(addX, -3 * pastV.y + addY);
             rb.AddForce(add);
         }
     }
