@@ -1,0 +1,3 @@
+[submodule "hptpongserver"]
+	path = hptpongserver
+	url = git@github.com:hawkenmedialab/hptpongserver.git
