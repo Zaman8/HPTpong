@@ -26,8 +26,8 @@ public class PaddleController : MonoBehaviour {
             float input = (isAi) ? ComputerMove() : Input.GetAxisRaw("Horizontal");
             transform.transform.Translate(new Vector3(0, input * speed, 0));
         }
-        if (transform.position.y > 4.75 || transform.position.y < -4.75) {
-            float newY = (transform.position.y > 4.75) ? 4.75f : -4.75f;
+        if (transform.position.y > 7 || transform.position.y < -7) {
+            float newY = (transform.position.y > 0) ? 7f : -7f;
             transform.position = new Vector3(transform.position.x, newY, 0);
         }
     }

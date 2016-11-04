@@ -8,7 +8,7 @@ public class RenewBounce : MonoBehaviour {
     Vector2 pastV;
     Vector2 pastV2;
     [SerializeField]
-    int timeAdjust;
+    float timeAdjust;
     public float restartTime;
     float speedIncrease;
     // Use this for initialization
@@ -20,7 +20,8 @@ public class RenewBounce : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        speedIncrease = (speedIncrease > 5000) ? 5000 : ((Time.timeSinceLevelLoad - restartTime) / timeAdjust) + 500;
+        speedIncrease = (speedIncrease > 1000) ? 1000 : ((Time.timeSinceLevelLoad - restartTime) * timeAdjust) + 500;
+        Debug.Log("Speed: " + speedIncrease);
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
