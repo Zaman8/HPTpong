@@ -12,6 +12,9 @@ public class BallStart : MonoBehaviour {
         StartCoroutine("start");
         renewBounce = ball.gameObject.GetComponent<RenewBounce>();
     }
+    public void starting() {
+        StartCoroutine("start");
+    }
     public void restart(int a) {
         ball.gameObject.transform.position = new Vector3(0, 0, 0);
         this.a = a;
@@ -19,7 +22,10 @@ public class BallStart : MonoBehaviour {
     }
     IEnumerator start() {
         int xvalue = (Random.Range(1, 2) == 1) ? -500 : 500;
+        ballRd.velocity = new Vector2(0, 0);
+        ball.transform.position = new Vector3(0, 0, 0);
         yield return new WaitForSeconds(3);
+        renewBounce.restartTime = Time.timeSinceLevelLoad;
         ballRd.AddForce(new Vector2( xvalue,0));
     }
     IEnumerator restartC() {

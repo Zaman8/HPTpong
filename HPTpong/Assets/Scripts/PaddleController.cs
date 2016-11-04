@@ -6,16 +6,11 @@ public class PaddleController : MonoBehaviour {
     public bool isAi;
     public bool isHard;
     public bool determineAttack = true;
-    Rigidbody2D ballRd;
     public GameObject ball;
     public GameObject player1;
     [SerializeField]
     float speed;
     public Vector3 secondPosition;
-    // Use this for initialization
-    void Start() {
-        ballRd = ball.GetComponent<Rigidbody2D>();
-    }
 
     // Update is called once per frame
     void FixedUpdate() {

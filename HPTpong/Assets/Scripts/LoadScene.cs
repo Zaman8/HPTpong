@@ -52,7 +52,8 @@ public class LoadScene : MonoBehaviour {
 
     void OnLevelWasLoaded(int level) {
         if (level == 1) {
-            p2 = GameObject.FindGameObjectWithTag("Player 2").GetComponent<PaddleController>();
+            Debug.Log("Loaded Level");
+            p2 = GameObject.FindGameObjectWithTag("Player2").GetComponent<PaddleController>();
             score = GameObject.FindGameObjectWithTag("GameController").GetComponent<Scores>();
             p2.isAi = isAI;
             p2.isHard = isHard;

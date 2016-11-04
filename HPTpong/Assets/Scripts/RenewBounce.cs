@@ -21,7 +21,7 @@ public class RenewBounce : MonoBehaviour {
 
     void FixedUpdate() {
         speedIncrease = (speedIncrease > 1000) ? 1000 : ((Time.timeSinceLevelLoad - restartTime) * timeAdjust) + 500;
-        Debug.Log("Speed: " + speedIncrease);
+        //Debug.Log("Speed: " + speedIncrease);
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
