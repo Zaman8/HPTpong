@@ -16,13 +16,15 @@ public class PauseMenu : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (ispaused == true) {
-                menu.gameObject.SetActive(!ispaused);
+            if (ispaused) {
+                ispaused = false;
+                menu.SetActive(false);
                 Time.timeScale = 1;
-            } else
-                menu.gameObject.SetActive(ispaused);
-            ispaused = !ispaused;
-            Time.timeScale = 0;
+            } else {
+                ispaused = true;
+                menu.SetActive(true);
+                Time.timeScale = 0;
+            }             
         }
     }
 
@@ -31,6 +33,7 @@ public class PauseMenu : MonoBehaviour {
         score.player1Score = 0;
         score.player2Score = 0;
         menu.gameObject.SetActive(false);
+        ispaused = false;
         Time.timeScale = 1;
         starting.starting();
     }
