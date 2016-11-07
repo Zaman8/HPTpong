@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
     bool ispaused;
@@ -9,7 +10,7 @@ public class PauseMenu : MonoBehaviour {
     // Use this for initialization
     void Start() {
         ispaused = false;
-        score = GameObject.FindGameObjectWithTag("GameController").GetComponent<Scores>();
+        score = this.GetComponent<Scores>();
         starting = this.GetComponent<BallStart>();
     }
 
@@ -17,13 +18,9 @@ public class PauseMenu : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (ispaused) {
-                ispaused = false;
-                menu.SetActive(false);
-                Time.timeScale = 1;
+                unpause();
             } else {
-                ispaused = true;
-                menu.SetActive(true);
-                Time.timeScale = 0;
+                pause();
             }             
         }
     }
@@ -32,12 +29,22 @@ public class PauseMenu : MonoBehaviour {
     public void restart() {
         score.player1Score = 0;
         score.player2Score = 0;
-        menu.gameObject.SetActive(false);
+        menu.SetActive(false);
         ispaused = false;
         Time.timeScale = 1;
-        starting.starting();
+        SceneManager.LoadScene(0);
     }
     public void exit() {
         Application.Quit();
+    }
+    public void unpause() {
+        ispaused = false;
+        menu.SetActive(false);
+        Time.timeScale = 1;
+    }
+    public void pause() {
+        ispaused = true;
+        menu.SetActive(true);
+        Time.timeScale = 0;
     }
 }
