@@ -20,7 +20,8 @@ public class RenewBounce : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        speedIncrease = (speedIncrease > 1000) ? 1000 : ((Time.timeSinceLevelLoad - restartTime) * timeAdjust) + 500;
+        speedIncrease = (speedIncrease > 2000) ? 2000 : ((Time.timeSinceLevelLoad - restartTime) * timeAdjust) + 500;
+        rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, -2000, 2000), rb.velocity.y);
         //Debug.Log("Speed: " + speedIncrease);
     }
 
@@ -32,11 +33,11 @@ public class RenewBounce : MonoBehaviour {
             Vector2 add = (collision.gameObject.CompareTag("Player1")) ? new Vector2(-1 * speedIncrease, yvalue) : new Vector2(speedIncrease, yvalue);
             rb.AddForce(add);
         } else if (collision.gameObject.CompareTag("Horizontal wall")) {
-            int addY = (this.gameObject.transform.position.y > 0) ? -100 : 100;
+            //int addY = (this.gameObject.transform.position.y > 0) ? -100 : 100;
             float addX = (rb.velocity.x > 0) ? speedIncrease : -1 * speedIncrease;
             addX = addX / 10;
-            Vector2 add = new Vector2(addX, -3 * pastV.y + addY);
-            rb.AddForce(add);
+            Vector2 add = new Vector2(addX, -2 * (pastV.y));
+           // rb.AddForce(add);
         }
     }
     IEnumerator velocity() {
