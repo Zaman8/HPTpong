@@ -28,7 +28,6 @@ public class PaddleController : MonoBehaviour {
     }
 
     float ComputerMove() {
-        //Debug.Log("First: " + firstPosition + "Second: " + secondPosition);
         if (ball.transform.position.x < secondPosition.x) {
             double y = calBallMovement();
             if (!isHard) {
